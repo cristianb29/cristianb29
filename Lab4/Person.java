@@ -1,4 +1,4 @@
-package Lab4;//hg
+package Lab4;
 
 public class Person {
     private String name;

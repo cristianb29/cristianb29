@@ -1,5 +1,5 @@
 package Lab4;
 
-public class Profesor extends Person{//hgf
+public class Profesor extends Person{
     private String[] cursuri;
 }

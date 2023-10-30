@@ -1,4 +1,4 @@
-package Lab4;//hgf
+package Lab4;
 
 public class Student extends Person{
     private int[] grades;
