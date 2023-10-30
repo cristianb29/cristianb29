@@ -1,7 +1,7 @@
 package Lab4;
 
 public class Lab04 {
-
+//jh
     public static void main(String[] args)
     {
         //mijloc("masini");
