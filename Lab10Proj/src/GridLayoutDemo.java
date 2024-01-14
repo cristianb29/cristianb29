@@ -1,4 +1,4 @@
-// Java program to illustrate the GridLayout 
+// Java program to illustrate the GridLayout
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -98,4 +98,4 @@ public class GridLayoutDemo extends JFrame {
         new GridLayoutDemo();
     }
 
-} 
+}
