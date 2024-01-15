@@ -1,0 +1,1 @@
+{"marca":"Dacia","model":"Spring","anFabr":"2022","tipCombustibil":true,"inchiriat":true,"nume":"Gal","prenume":"Darius","startInchiriere":"17.07.2022","endInchiriere":"29.07.2022"}

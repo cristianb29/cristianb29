@@ -1,69 +1,23 @@
-package ProiectJava;
-/*
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-public class JavaProj extends JFrame {
-    JavaProj() {
-        JPanel pCentru = new JPanel();
-        pCentru.setLayout(new GridLayout(7, 2));
-        FlowLayout layout = new FlowLayout();
-        JPanel pBtn = new JPanel();
-        pBtn.setLayout(layout);
-        JLabel lMarca, lModel, lAnFabricatie;
-        JTextField fMarca, fModel, fAnFabricatie;
-        JRadioButton rBenzina, rMotorina;
-        JCheckBox chInchiriat;
-        lMarca = new JLabel("Marca:");
-        fMarca = new JTextField(20);
-        lModel = new JLabel("Model:");
-        lAnFabricatie = new JLabel("An fabricatie:");
-        fModel = new JTextField(20);
-        fAnFabricatie = new JTextField(20);
-        rBenzina = new JRadioButton("Benzina");
-        rMotorina = new JRadioButton("Motorina");
-        chInchiriat = new JCheckBox("Inchiriat?");
-        pCentru.add(lMarca);
-        pCentru.add(fMarca);
-        pCentru.add(lModel);
-        pCentru.add(fModel);
-
-        //===========================================================
-        add(pCentru, "North");
-        add(pBtn, "South");
-        setResizable(false);
-        this.setSize(500, 400);
-        setVisible(true);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
-                System.exit(0);
-            }
-        });
-    }
-    public static void main(String args[]){
-        new JavaProj();
-    }
-}
-*/
+package org.example;
 
 // Java program to illustrate the GridLayout
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileWriter;
+import java.io.IOException;
 
-// class GridLayout extends JFrame
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 public class JavaProj extends JFrame {
 
     JavaProj() {
+
         setResizable(false);
         JPanel p1 = new JPanel();
         p1.setLayout(new GridLayout(11, 2));
@@ -75,6 +29,7 @@ public class JavaProj extends JFrame {
         JButton btnSave, btnExit;
         JRadioButton rdBenzina, rdMotorina;
         JCheckBox chInchiriat;
+        //JTable tTabelMasini;
         lEmpty = new JLabel("");
         lEmptyTwo = new JLabel("");
         lEmptyThree = new JLabel("");
@@ -97,6 +52,7 @@ public class JavaProj extends JFrame {
         fDataInc = new JTextField(20);
         lDataFinal = new JLabel("Sfarsitul inchirierii:");
         fDataFinal = new JTextField(20);
+        //tTabelMasini = new JTable();
         p1.add(lMarca);
         p1.add(fMarca);
         p1.add(lModel);
@@ -117,6 +73,7 @@ public class JavaProj extends JFrame {
         p1.add(fDataInc);
         p1.add(lDataFinal);
         p1.add(fDataFinal);
+        //p1.add(tTabelMasini);
         lNume.setEnabled(false);
         fNume.setEnabled(false);
         lPrenume.setEnabled(false);
@@ -188,7 +145,7 @@ public class JavaProj extends JFrame {
         add(p1, "North");
         add(p2, "South");
         setVisible(true);
-        this.setSize(500, 400);
+        this.setSize(500, 350);
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -197,9 +154,44 @@ public class JavaProj extends JFrame {
                 }
             }
         });
+
+        btnSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try {
+                    Car masina = new Car();
+                    masina.setMarca(fMarca.getText());
+                    masina.setModel(fModel.getText());
+                    masina.setAnFabr(fAnFabr.getText());
+                    masina.setTipCombustibil(rdMotorina.isSelected());
+                    masina.setInchiriat(chInchiriat.isSelected());
+                    masina.setStartInchiriere(fDataInc.getText());
+                    masina.setEndInchiriere(fDataFinal.getText());
+                    masina.setNume(fNume.getText());
+                    masina.setPrenume(fPrenume.getText());
+                    Toolkit.getDefaultToolkit().beep();
+                    JOptionPane.showMessageDialog(null, "Executat cu succes!");
+                    ObjectMapper mapper = new ObjectMapper();
+                    String showJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(masina);
+                    String jsonString = mapper.writeValueAsString(masina);
+                    System.out.println(showJson);
+                    System.out.println("Se rescrie din JSON in obiect (DEBUG): ");
+                    Car masinaHelp = mapper.readValue(jsonString, Car.class);
+                    FileWriter myWriter = new FileWriter("proba.txt");
+                    myWriter.write(jsonString);
+                    myWriter.close();
+                }
+                catch (IOException f){
+                    System.out.println("S-a produs o eroare. Executia programului se va opri.");
+                    f.printStackTrace();
+                }
+                //DEBUG JOptionPane.showMessageDialog(null, masina.getMarca());
+            }
+        });
     }
 
     // Main Method
+
     public static void main(String[] args) {
         new JavaProj();
     }
